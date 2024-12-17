@@ -8,6 +8,8 @@ export type ILoginUser = {
 export type ILoginUserResponse = {
   accessToken: string;
   refreshToken?: string;
+  email: string;
+  role: string;
 };
 
 export type IRefreshTokenResponse = {

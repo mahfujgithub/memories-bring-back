@@ -21,12 +21,14 @@ const loginUser = async (payload) => {
         throw new ApiError_1.default(httpStatus.HttpStatus.UNAUTHORIZED, 'Password is incorrect!');
     }
     //   create access token & refresh token
-    const { email: userEmail, password: userPassword } = isUserExist;
-    const accessToken = jwtHelpers_1.jwtHelpers.createToken({ userEmail, userPassword }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
-    const refreshToken = jwtHelpers_1.jwtHelpers.createToken({ email, password }, config_1.default.jwt.refresh_secret, config_1.default.jwt.refresh_expires_in);
+    const { email: userEmail, password: userPassword, role } = isUserExist;
+    const accessToken = jwtHelpers_1.jwtHelpers.createToken({ userEmail, userPassword, role }, config_1.default.jwt.secret, config_1.default.jwt.expires_in);
+    const refreshToken = jwtHelpers_1.jwtHelpers.createToken({ email, password, role }, config_1.default.jwt.refresh_secret, config_1.default.jwt.refresh_expires_in);
     return {
         accessToken,
         refreshToken,
+        email,
+        role
     };
 };
 const refreshToken = async (token) => {
@@ -54,5 +56,5 @@ const refreshToken = async (token) => {
 };
 exports.AuthService = {
     loginUser,
-    refreshToken
+    refreshToken,
 };

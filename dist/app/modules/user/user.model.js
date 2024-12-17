@@ -27,7 +27,7 @@ const UserSchema = new mongoose_1.Schema({
     timestamps: true,
 });
 UserSchema.statics.isUserExist = async function (email) {
-    return await exports.User.findOne({ email }, { email: 1, password: 1 });
+    return await exports.User.findOne({ email }, { email: 1, password: 1, role: 1 }).lean();
 };
 UserSchema.statics.isPasswordMatched = async function (givenPassword, savedPassword) {
     return await bcrypt_1.default.compare(givenPassword, savedPassword);

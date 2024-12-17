@@ -27,24 +27,29 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
     );
   }
 
+
   //   create access token & refresh token
-  const { email: userEmail, password: userPassword } = isUserExist;
+  const { email: userEmail, password: userPassword, role } = isUserExist;
+
 
   const accessToken = jwtHelpers.createToken(
-    { userEmail, userPassword },
+    { userEmail, userPassword, role },
     config.jwt.secret as Secret,
     config.jwt.expires_in as string,
   );
 
   const refreshToken = jwtHelpers.createToken(
-    { email, password },
+    { email, password, role },
     config.jwt.refresh_secret as Secret,
     config.jwt.refresh_expires_in as string,
   );
 
+
   return {
     accessToken,
     refreshToken,
+    email,
+    role
   };
 };
 
@@ -91,5 +96,5 @@ const refreshToken = async (token: string): Promise<IRefreshTokenResponse> => {
 
 export const AuthService = {
   loginUser,
-  refreshToken
+  refreshToken,
 };

@@ -31,8 +31,8 @@ UserSchema.statics.isUserExist = async function (
 ): Promise<IUser | null> {
   return await User.findOne(
     {email},
-    { email: 1, password: 1 },
-  );
+    { email: 1, password: 1, role: 1 },
+  ).lean();
 };
 
 UserSchema.statics.isPasswordMatched = async function (
